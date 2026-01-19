@@ -9,17 +9,15 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
-  // Initializes the motor
+  // Initializes the motor and controller
   private final TalonFX shooterMotor;
-
-  // Set up controller
   private final VelocityVoltage velocityControl;
 
   public ShooterSubsystem() {
+    // Set up the motor
     shooterMotor = new TalonFX(50);
 
-
-    // Configures the motor
+    // ------- Configures the motor -------- //
     TalonFXConfiguration config = new TalonFXConfiguration();
 
     // Set motor outputs
@@ -43,6 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
     config.Voltage.PeakForwardVoltage = 12.0;
     config.Voltage.PeakReverseVoltage = -12.0;
 
+    // Apply configs and slots 
     shooterMotor.getConfigurator().apply(config);
     velocityControl = new VelocityVoltage(0).withSlot(0);
     
@@ -50,7 +49,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void setVelocity(double velocityRPS) {
     shooterMotor.setControl(velocityControl.withVelocity(velocityRPS));
-
   }
 
   public void stop() {
